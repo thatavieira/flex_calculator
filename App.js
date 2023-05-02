@@ -1,7 +1,10 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Appbar, Button, Text, TextInput } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { Button, Text, TextInput } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Body from './src/components/Body';
+import Container from './src/components/Container';
+import Header from './src/components/Header';
 
 const App = () => {
 
@@ -12,11 +15,9 @@ const App = () => {
 
   return (
   <SafeAreaProvider>
-    <View style={styles.container}>
-    <Appbar.Header>
-      <Appbar.Content title="Calculadora Flex" />
-    </Appbar.Header>
-    <View style={styles.body}>
+    <Container>
+    <Header title={'Calculadora Flex'} />
+    <Body>
     <TextInput
     style={styles.input}
       label="Preço da Gasolina"
@@ -35,21 +36,14 @@ const App = () => {
       CALCULAR
     </Button>
     <Text style={styles.text}> {gas} </Text>
-    </View>
-    </View>
+    </Body>
+    </Container>
   </SafeAreaProvider>
     
   );
 };
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    backgroundColor: '#FFF',
-  },
-  body: {
-    margin:8
-  },
   input:{
     backgroundColor: '#FFF',
     marginBottom:8,
