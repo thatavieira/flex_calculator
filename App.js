@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Body from './src/components/Body';
@@ -13,6 +13,18 @@ const App = () => {
   const [eta, setEta] = React.useState('');
   const [res, setRes] = React.useState('');
   
+  const handleCalcular = () =>{
+    if(!gas || gas <=0 || !eta || eta <=0){
+      Alert.alert('Atenção!', 'Obrigatório informar o valor da gasolina e do etanol!');
+    }else{
+      let pct = Math.round((eta/gas)*100);
+      if(pct < 70){
+        setRes(pct + '% Recomendamos o uso do Etanol');
+      }else{
+        setRes(pct + '% Recomendamos o uso da Gasolina')
+      }
+    }
+  }
 
   return (
   <SafeAreaProvider>
@@ -30,11 +42,11 @@ const App = () => {
       onChangeText={text => setEta(text)}
     />
     <Button
-      mode="contained" onPress={() =>
-      console.log('Pressed')}>
+      mode="contained" onPress={
+        handleCalcular}>
       CALCULAR
     </Button>
-    <Text style={styles.text}> {gas} </Text>
+    <Text style={styles.text}> {res} </Text>
     </Body>
     </Container>
   </SafeAreaProvider>
