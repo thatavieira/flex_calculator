@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, Text, TextInput } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Body from './src/components/Body';
 import Container from './src/components/Container';
 import Header from './src/components/Header';
+import Input from './src/components/Input';
 
 const App = () => {
 
@@ -18,14 +19,12 @@ const App = () => {
     <Container>
     <Header title={'Calculadora Flex'} />
     <Body>
-    <TextInput
-    style={styles.input}
+    <Input
       label="Preço da Gasolina"
       value={gas}
       onChangeText={text => setGas(text)}
     />
-    <TextInput
-    style={styles.input}
+    <Input
       label="Preço do Etanol"
       value={eta}
       onChangeText={text => setEta(text)}
@@ -44,10 +43,6 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-  input:{
-    backgroundColor: '#FFF',
-    marginBottom:8,
-  },
   text:{
     textAlign:'center',
     margin:8,
