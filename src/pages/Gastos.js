@@ -4,6 +4,7 @@ import Body from "../components/Body";
 import Container from "../components/Container";
 import Header from "../components/Header";
 
+import { useNavigation } from '@react-navigation/native';
 
 const DATA = [
     {
@@ -26,6 +27,8 @@ const DATA = [
 
 
 const Gastos = () =>{
+
+    const navigation = useNavigation();
 
     const renderItem = ({ item }) => 
     (
@@ -63,6 +66,7 @@ const Gastos = () =>{
                     style={styles.fab}
                     small
                     icon="plus"
+                    onPress={() => navigation.navigate('Abastecimento')}
                 />
             </Body>
         </Container>
