@@ -1,7 +1,7 @@
 import { Appbar } from "react-native-paper";
 
 
-const Header = ({ title, goBack }) => {
+const Header = ({ title, goBack, children }) => {
     return (
         <Appbar.Header>
             {
@@ -9,6 +9,7 @@ const Header = ({ title, goBack }) => {
                 <Appbar.BackAction onPress={goBack} />
             }
             <Appbar.Content title={title} />
+            {children}
         </Appbar.Header>
     );
 };
