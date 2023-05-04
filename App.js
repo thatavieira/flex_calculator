@@ -7,11 +7,11 @@ const App = () => {
 
   return (
     <NavigationContainer>
-    <Main />
+      <Main />
     </NavigationContainer>
 
   )
 
-  }
+}
 
 export default App;

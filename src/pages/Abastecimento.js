@@ -1,5 +1,6 @@
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Appbar, Button, RadioButton, Text, TextInput } from "react-native-paper";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -13,6 +14,8 @@ import { useNavigation } from '@react-navigation/native';
 const Abastecimento = () => {
 
     const navigation = useNavigation();
+    const [date, setDate] = useState(new Date());
+    const [show, setShow] = useState(false);
 
     const [tipo, setTipo] = useState('gas');
     const [preco, setPreco] = useState('');
@@ -27,6 +30,7 @@ const Abastecimento = () => {
     const handleExcluir = () => {
         console.log('Excluir');
     }
+
 
 
 
@@ -67,12 +71,30 @@ const Abastecimento = () => {
                         </View>
                     </View>
 
-                    <Input
-                        label="Data"
-                        value={data}
-                        onChangeText={text => setData(text)}
-                        left={<TextInput.Icon icon="calendar" />}
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={'date'}
+                        is24Hour={true}
+                        display="default"
+                        onTouchCancel={() => setShow(false)}
+                        onChange={(event, date) => {
+                            setShow(false);
+                            setData(moment(date).format('DD/MM/YYYY'));
+                        }}
                     />
+
+
+
+                    <TouchableOpacity onPress={() => setShow(true)}>
+                        <Input
+                            label="Data"
+                            value={data}
+                            left={<TextInput.Icon icon="calendar" />}
+                            editable={false}
+                        />
+                    </TouchableOpacity>
+
 
                     <Input
                         label="Preço"
