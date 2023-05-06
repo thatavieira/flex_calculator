@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const DATA = [
     {
-        id:1,
+        id: 1,
         tipo: 0,
         data: '01/01/2022',
         preco: 6.77,
@@ -16,8 +16,8 @@ const DATA = [
         odometro: 22000,
     },
     {
-        id:1,
-        tipo:1,
+        id: 1,
+        tipo: 1,
         data: '15/01/2022',
         preco: 4.77,
         valor: 150,
@@ -26,11 +26,11 @@ const DATA = [
 ];
 
 
-const Gastos = () =>{
+const Gastos = () => {
 
     const navigation = useNavigation();
 
-    const renderItem = ({ item }) => 
+    const renderItem = ({ item }) =>
     (
         <List.Item
             title={
@@ -50,6 +50,8 @@ const Gastos = () =>{
                     {item.data}{' '}
                 </Text>
             )}
+            //função para abrir na tela de abastecimento ao clicar no gasto.
+            onPress={() => navigation.navigate('Abastecimento', { item })}
         />
     );
 
@@ -75,12 +77,12 @@ const Gastos = () =>{
 
 const styles = StyleSheet.create({
     fab: {
-      position: 'relative',
-      margin: 180,
-      left: 160,
-      bottom: 50,
-      top:130,
+        position: 'relative',
+        margin: 170,
+        left: 140,
+        bottom: 40,
+        top: 200,
     },
-  });
+});
 
 export default Gastos;

@@ -1,19 +1,29 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Appbar, Button, RadioButton, Text, TextInput } from "react-native-paper";
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+    Appbar,
+    Button,
+    RadioButton,
+    Text,
+    TextInput
+} from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import Body from "../components/Body";
-import Container from "../components/Container";
-import Header from "../components/Header";
-import Input from "../components/Input";
+import Body from '../components/Body';
+import Container from '../components/Container';
+import Header from '../components/Header';
+import Input from '../components/Input';
 
 import { useNavigation } from '@react-navigation/native';
 
-const Abastecimento = () => {
 
+
+const Abastecimento = ({ route }) => {
     const navigation = useNavigation();
+    //setar informações no form.
+    const { item } = route.params ? route.params : {};
     const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
 
@@ -21,35 +31,47 @@ const Abastecimento = () => {
     const [preco, setPreco] = useState('');
     const [valor, setValor] = useState('');
     const [odometro, setOdometro] = useState('');
-    const [data, setData] = useState('');
+    //setar data ao clicar no item já registrado
+    const [data, setData] = useState(moment(new Date()).format('DD/MM/YYYY'));
+
+    //setar informações dos item já registrados ao clicar neles.
+    useEffect(() => {
+        if (item) {
+            setTipo(item.tipo == 0 ? 'gas' : 'eta');
+            setData(item.data);
+            setPreco(item.preco);
+            setValor(item.valor);
+            setOdometro(item.odometro);
+
+        }
+
+    }, [item]);
+
 
     const handleSalvar = () => {
         console.log('Salvar');
-    }
+    };
 
     const handleExcluir = () => {
         console.log('Excluir');
-    }
-
-
-
+    };
 
     return (
         <SafeAreaProvider>
             <Container>
-                <Header
-                    title={"Abastecimento"}
-                    goBack={() => navigation.goBack()} >
-
+                <Header title={'Abastecimento'} goBack={() => navigation.goBack()}>
                     <Appbar.Action icon="check" onPress={handleSalvar} />
-                    <Appbar.Action icon="trash-can" onPress={handleExcluir} />
+
+                    {
+                        item &&
+                        <Appbar.Action icon="trash-can" onPress={handleExcluir} />
+                    }
+
 
                 </Header>
 
                 <Body>
-
                     <View style={styles.containerRadio}>
-
                         <View style={styles.containerItem}>
                             <RadioButton
                                 value="first"
@@ -71,20 +93,20 @@ const Abastecimento = () => {
                         </View>
                     </View>
 
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode={'date'}
-                        is24Hour={true}
-                        display="default"
-                        onTouchCancel={() => setShow(false)}
-                        onChange={(event, date) => {
-                            setShow(false);
-                            setData(moment(date).format('DD/MM/YYYY'));
-                        }}
-                    />
-
-
+                    {show && (
+                        <DateTimePicker
+                            testID="dateTimePicker"
+                            value={date}
+                            mode={'date'}
+                            is24Hour={true}
+                            display="default"
+                            onTouchCancel={() => setShow(false)}
+                            onChange={(event, date) => {
+                                setShow(false);
+                                setData(moment(date).format('DD/MM/YYYY'));
+                            }}
+                        />
+                    )}
 
                     <TouchableOpacity onPress={() => setShow(true)}>
                         <Input
@@ -95,27 +117,28 @@ const Abastecimento = () => {
                         />
                     </TouchableOpacity>
 
-
                     <Input
                         label="Preço"
                         value={preco}
-                        onChangeText={text => setPreco(text)}
+                        onChangeText={(text) => setPreco(text)}
                         left={<TextInput.Icon icon="currency-brl" />}
                     />
 
                     <Input
                         label="Valor"
                         value={valor}
-                        onChangeText={text => setValor(text)}
+                        onChangeText={(text) => setValor(text)}
                         left={<TextInput.Icon icon="currency-brl" />}
                     />
 
                     <Input
                         label="Odometro"
                         value={odometro}
-                        onChangeText={text => setOdometro(text)}
+                        onChangeText={(text) => setOdometro(text)}
                         left={<TextInput.Icon icon="camera-timer" />}
                     />
+
+
 
                     <Button
                         mode="contained"
@@ -125,16 +148,18 @@ const Abastecimento = () => {
                         Salvar
                     </Button>
 
+                    {
+                        // se a informação não existir não aparece o botom de excluir.
+                        item &&
 
-                    <Button
-                        mode="contained"
-                        buttonColor={'red'}
-                        style={styles.button}
-                        onPress={handleExcluir}>
-                        Excluir
-                    </Button>
-
-
+                        <Button
+                            mode="contained"
+                            buttonColor={'red'}
+                            style={styles.button}
+                            onPress={handleExcluir}>
+                            Excluir
+                        </Button>
+                    }
 
 
                 </Body>
@@ -148,17 +173,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         margin: 8,
         alignItems: 'center',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
     },
 
     containerItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
     },
     button: {
-        marginTop: 8
-    }
+        marginTop: 8,
+    },
 });
 
 export default Abastecimento;
