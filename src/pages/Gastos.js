@@ -1,34 +1,34 @@
+import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet } from "react-native";
 import { FAB, List, Text } from "react-native-paper";
+
 import Body from "../components/Body";
 import Container from "../components/Container";
 import Header from "../components/Header";
 
-import { useNavigation } from '@react-navigation/native';
+import { getGastos } from '../services/GastoServiceDB';
 
-const DATA = [
-    {
-        id: 1,
-        tipo: 0,
-        data: '01/01/2022',
-        preco: 6.77,
-        valor: 100,
-        odometro: 22000,
-    },
-    {
-        id: 1,
-        tipo: 1,
-        data: '15/01/2022',
-        preco: 4.77,
-        valor: 150,
-        odometro: 25000,
-    },
-];
+import { useNavigation } from '@react-navigation/native';
+//se tiver em foco os dados são atualizados
+import { useIsFocused } from '@react-navigation/native';
+
 
 
 const Gastos = () => {
 
     const navigation = useNavigation();
+    const isFocused = useIsFocused();
+
+
+
+    const [gastos, setGastos] = useState([]);
+
+    //carregar dados na tela
+    useEffect(() => {
+        getGastos().then((dados) => {
+            setGastos(dados);
+        });
+    }, [isFocused]);
 
     const renderItem = ({ item }) =>
     (
@@ -60,7 +60,7 @@ const Gastos = () => {
             <Header title={'Gerenciador de Combustível'} />
             <Body>
                 <FlatList
-                    data={DATA}
+                    data={gastos}
                     renderItem={renderItem}
                     keyExtractor={(item) => item.id}
                 />
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         margin: 170,
         left: 140,
         bottom: 40,
-        top: 200,
+        top: 300,
     },
 });
 
