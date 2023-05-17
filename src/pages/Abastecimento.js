@@ -16,7 +16,10 @@ import Container from '../components/Container';
 import Header from '../components/Header';
 import Input from '../components/Input';
 
+import { deleteGasto, insertGasto, updateGasto } from '../services/GastoServiceDB';
+
 import { useNavigation } from '@react-navigation/native';
+
 
 
 
@@ -28,32 +31,51 @@ const Abastecimento = ({ route }) => {
     const [show, setShow] = useState(false);
 
     const [tipo, setTipo] = useState('gas');
-    const [preco, setPreco] = useState('');
-    const [valor, setValor] = useState('');
-    const [odometro, setOdometro] = useState('');
+    const [preco, setPreco] = useState(null);
+    const [valor, setValor] = useState(null);
+    const [odometro, setOdometro] = useState(null);
     //setar data ao clicar no item já registrado
     const [data, setData] = useState(moment(new Date()).format('DD/MM/YYYY'));
 
-    //setar informações dos item já registrados ao clicar neles.
+    //refresh
     useEffect(() => {
         if (item) {
             setTipo(item.tipo == 0 ? 'gas' : 'eta');
             setData(item.data);
-            setPreco(item.preco);
-            setValor(item.valor);
-            setOdometro(item.odometro);
-
+            setPreco(item.preco.toFixed(2));
+            setValor(item.valor.toFixed(2));
+            setOdometro(item.odometro.toFixed(0));
         }
-
     }, [item]);
 
-
     const handleSalvar = () => {
-        console.log('Salvar');
+        if (item) {
+            updateGasto({
+                tipo: tipo == 'gas' ? 0 : 1,
+                data: data,
+                preco: preco,
+                valor: valor,
+                odometro: odometro,
+                id: item.id,
+            }).then();
+        } else {
+            insertGasto({
+                tipo: tipo == 'gas' ? 0 : 1,
+                data: data,
+                preco: preco,
+                valor: valor,
+                odometro: odometro,
+            }).then();
+        }
+
+        //depois de inserir voltar para a navegação anterior.
+        navigation.goBack();
+
     };
 
     const handleExcluir = () => {
-        console.log('Excluir');
+        deleteGasto(item.id).then();
+        navigation.goBack();
     };
 
     return (
