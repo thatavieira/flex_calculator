@@ -7,7 +7,12 @@ import Container from '../components/Container';
 import Input from '../components/Input';
 import Logo from '../components/Logo';
 
+import { useNavigation } from '@react-navigation/native';
+
 const Login = () => {
+
+
+    const navigation = useNavigation();
 
     const [email, setEmail] =
         useState('thaisgurgel@pucminas.com.br');
@@ -48,7 +53,7 @@ const Login = () => {
                 <Button
                     style={styles.button}
                     mode="outlined"
-                    onPress={() => console.log('Pressed')}>
+                    onPress={() => navigation.navigate('Register')}>
                     REGISTRAR
                 </Button>
             </Body>
