@@ -8,17 +8,16 @@ import Input from '../components/Input';
 import Logo from '../components/Logo';
 
 import { useNavigation } from '@react-navigation/native';
+import { useUser } from '../contexts/UserContext';
 
 const Login = () => {
-
-
     const navigation = useNavigation();
 
-    const [email, setEmail] =
-        useState('thaisgurgel@pucminas.com.br');
+    const { setSigned, setName } = useUser();
 
-    const [password, setPassword] =
-        useState('pucminas');
+    const [email, setEmail] = useState('thaisgurgel@pucminas.com.br');
+
+    const [password, setPassword] = useState('pucminas');
 
     return (
         <Container>
@@ -26,28 +25,26 @@ const Login = () => {
                 <Logo />
             </View>
 
-            <Headline style={styles.textHeader}>Gerenciadro de Combustivel</Headline>
+            <Headline style={styles.textHeader}>Gerenciador de Combustivel</Headline>
 
             <Body>
                 <Input
                     label="Email"
                     value={email}
-                    onChangeText={(text) =>
-                        setPassword(text)}
+                    onChangeText={(text) => setPassword(text)}
                     left={<TextInput.Icon name="Key" />}
                 />
                 <Input
                     label="Senha"
                     value={password}
                     secureTextEntry
-                    onChangeText={(text) =>
-                        setPassword(text)}
+                    onChangeText={(text) => setPassword(text)}
                     left={<TextInput.Icon name="Key" />}
                 />
                 <Button
                     style={styles.button}
                     mode="contained"
-                    onPress={() => console.log('Pressed')}>
+                    onPress={() => setSigned(true)}>
                     LOGIN
                 </Button>
                 <Button
@@ -71,7 +68,7 @@ const styles = StyleSheet.create({
     header: {
         alignItems: 'center',
         marginTop: 30,
-        marginBottom: 12
+        marginBottom: 12,
     },
 });
 
