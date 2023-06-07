@@ -1,18 +1,15 @@
 import { NavigationContainer } from '@react-navigation/native';
-
-
-import Auth from './src/navigations/Auth';
-
+import UserProvider from './src/contexts/UserContext';
+import Route from './src/navigations/Route';
 
 const App = () => {
-
   return (
-    <NavigationContainer>
-      <Auth />
-    </NavigationContainer>
-
-  )
-
-}
+    <UserProvider>
+      <NavigationContainer>
+        <Route />
+      </NavigationContainer>
+    </UserProvider>
+  );
+};
 
 export default App;
