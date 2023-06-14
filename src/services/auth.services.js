@@ -36,4 +36,3 @@ export const login = async (param) => {
         return null;
     }
 }
-

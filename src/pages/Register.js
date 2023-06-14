@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { Button, Headline, TextInput } from 'react-native-paper';
 
 import Body from '../components/Body';
@@ -23,8 +23,6 @@ const Register = () => {
         useState('pucminas');
 
     const handleRegister = () => {
-        //chamando register e passando os parametros (authservice)    
-
         register({
             name: name,
             email: email,
@@ -32,6 +30,17 @@ const Register = () => {
         }).then(res => {
             console.log(res);
         });
+
+        if (res) {
+
+            Alert.alert('Atenção', 'Usuário cadastrado com sucesso!', [
+                { text: "Ok", onPress: () => navigation.goBack() }
+            ]);
+
+        } else {
+
+            Alert.alert('Atenção', 'Usuário não cadastrado! Tente novamente mais tarde');
+        }
 
     }
 

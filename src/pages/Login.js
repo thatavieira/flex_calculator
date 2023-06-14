@@ -21,8 +21,6 @@ const Login = () => {
     const [password, setPassword] = useState('pucminas');
 
     const handleLogin = () => {
-        //chamando login e passando os parametros (authservice)    
-
         login({
             email: email,
             password: password
