@@ -18,6 +18,7 @@ const Gastos = () => {
 
     const navigation = useNavigation();
     const isFocused = useIsFocused();
+    const { name } = useUser();
 
 
 
@@ -57,7 +58,7 @@ const Gastos = () => {
 
     return (
         <Container>
-            <Header title={'Gerenciador de Combustível'} />
+            <Header title={'Olá, ' + name} />
             <Body>
                 <FlatList
                     data={gastos}

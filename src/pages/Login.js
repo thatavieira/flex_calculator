@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { Button, Headline, TextInput } from 'react-native-paper';
 
 import Body from '../components/Body';
@@ -9,6 +9,7 @@ import Logo from '../components/Logo';
 
 import { useNavigation } from '@react-navigation/native';
 import { useUser } from '../contexts/UserContext';
+import { login } from `../services/auth.services`;
 
 const Login = () => {
     const navigation = useNavigation();
@@ -18,6 +19,29 @@ const Login = () => {
     const [email, setEmail] = useState('thaisgurgel@pucminas.com.br');
 
     const [password, setPassword] = useState('pucminas');
+
+    const handleLogin = () => {
+        //chamando login e passando os parametros (authservice)    
+
+        login({
+            email: email,
+            password: password
+        }).then(res => {
+            console.log(res);
+        });
+
+        if (res && res.user) {
+
+            setSigned(true);
+            setName(res.user.name)
+
+
+        } else {
+
+            Alert.alert('Atenção', 'Usuário ou senha inválidos');
+        }
+
+    }
 
     return (
         <Container>
@@ -44,7 +68,7 @@ const Login = () => {
                 <Button
                     style={styles.button}
                     mode="contained"
-                    onPress={() => setSigned(true)}>
+                    onPress={handleLogin}>
                     LOGIN
                 </Button>
                 <Button
