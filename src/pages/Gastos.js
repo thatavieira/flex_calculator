@@ -1,43 +1,37 @@
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet } from "react-native";
-import { FAB, List, Text } from "react-native-paper";
+import { FlatList, StyleSheet } from 'react-native';
+import { FAB, List, Text } from 'react-native-paper';
 
-import Body from "../components/Body";
-import Container from "../components/Container";
-import Header from "../components/Header";
-
-import { getGastos } from '../services/GastoServiceDB';
+import Body from '../components/Body';
+import Container from '../components/Container';
+import Header from '../components/Header';
 
 import { useNavigation } from '@react-navigation/native';
-//se tiver em foco os dados são atualizados
+import { useUser } from '../contexts/UserContext';
+import { getGastos } from '../services/gastos.services';
+
 import { useIsFocused } from '@react-navigation/native';
-
-
 
 const Gastos = () => {
 
     const navigation = useNavigation();
     const isFocused = useIsFocused();
     const { name } = useUser();
-
-
-
     const [gastos, setGastos] = useState([]);
 
-    //carregar dados na tela
     useEffect(() => {
-        getGastos().then((dados) => {
+        getGastos().then(dados => {
+            console.log(dados);
             setGastos(dados);
         });
     }, [isFocused]);
 
-    const renderItem = ({ item }) =>
-    (
+    const renderItem = ({ item }) => (
         <List.Item
             title={
-                'R$' + item.valor.toFixed(2) + ' (R$' + item.preco.toFixed(2) + ')'
+                'R$' + item.valor + ' (R$' + item.preco + ')'
             }
-            description={item.odometro + ' Km'}
+            description={item.odometro + ' km'}
             left={(props) => (
                 <List.Icon
                     {...props}
@@ -51,7 +45,6 @@ const Gastos = () => {
                     {item.data}{' '}
                 </Text>
             )}
-            //função para abrir na tela de abastecimento ao clicar no gasto.
             onPress={() => navigation.navigate('Abastecimento', { item })}
         />
     );
@@ -78,11 +71,10 @@ const Gastos = () => {
 
 const styles = StyleSheet.create({
     fab: {
-        position: 'relative',
-        margin: 170,
-        left: 140,
-        bottom: 40,
-        top: 300,
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0,
     },
 });
 
