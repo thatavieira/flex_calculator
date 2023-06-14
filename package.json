@@ -12,6 +12,7 @@
     "@react-native-community/datetimepicker": "^7.0.1",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
+    "axios": "^1.4.0",
     "expo": "^44.0.6",
     "expo-constants": "^10.1.1",
     "expo-status-bar": "~1.4.4",

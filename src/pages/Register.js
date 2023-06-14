@@ -8,6 +8,8 @@ import Input from '../components/Input';
 import Logo from '../components/Logo';
 
 import { useNavigation } from '@react-navigation/native';
+import { register } from '../services/auth.services';
+
 
 const Register = () => {
 
@@ -20,6 +22,18 @@ const Register = () => {
     const [password, setPassword] =
         useState('pucminas');
 
+    const handleRegister = () => {
+        //chamando register e passando os parametros (authservice)    
+
+        register({
+            name: name,
+            email: email,
+            password: password
+        }).then(res => {
+            console.log(res);
+        });
+
+    }
 
     return (
         <Container>
@@ -56,7 +70,7 @@ const Register = () => {
                 <Button
                     style={styles.button}
                     mode="contained"
-                    onPress={() => console.log('Pressed')}>
+                    onPress={handleRegister}>
                     REGISTRAR
                 </Button>
                 <Button
