@@ -5,7 +5,7 @@ export const UserContext =
 
 export default function UserProvider({ children }) {
     const [signed, setSigned] =
-        useState(false);
+        useState(true);
     const [name, setName] = useState('');
 
     return (

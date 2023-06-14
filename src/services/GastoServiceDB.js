@@ -1,26 +1,70 @@
-import Database from './DbServices';
-
-const DB_EXEC = Database.getConnection();
+import { BASE_URL } from './urls';
+import API from './webapi.services';
 
 export const getGastos = async () => {
-    let results = await DB_EXEC(`select * from gastos`);
-    //console.log(results);
-    return results.rows._array;
+    try {
+        return await API.get(`${BASE_URL}/660/gastos`).then(
+            response => {
+                return response.data;
+            },
+            error => {
+                console.log(error);
+                return null;
+            }
+        );
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 }
 
-
 export const insertGasto = async (param) => {
-    let results = await DB_EXEC(`insert into gastos(tipo, data, preco, valor, odometro) values(?,?,?,?,?)`, [param.tipo, param.data, param.preco, param.valor, param.odometro]);
-    //console.log(results);
-    return results.rowsAffected;
+    try {
+        return await API.post(`${BASE_URL}/660/gastos`, param).then(
+            response => {
+                return response.data;
+            },
+            error => {
+                console.log(error);
+                return null;
+            }
+        );
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 }
 
 export const updateGasto = async (param) => {
-    let results = await DB_EXEC(`update gastos set tipo=?, data=?,preco=?, valor=?, odometro=? where id=?`, [param.tipo, param.data, param.preco, param.valor, param.odometro, param.id]);
-    return results.rowsAffected;
+    try {
+        return await API.put(`${BASE_URL}/660/gastos/${param.id}`, param).then(
+            response => {
+                return response.data;
+            },
+            error => {
+                console.log(error);
+                return null;
+            }
+        );
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 }
 
 export const deleteGasto = async (id) => {
-    let results = await DB_EXEC(`delete from gastos where id=?`, [id]);
-    return results.rowsAffected;
+    try {
+        return await API.delete(`${BASE_URL}/660/gastos/${id}`).then(
+            response => {
+                return response.data;
+            },
+            error => {
+                console.log(error);
+                return null;
+            }
+        );
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 }
